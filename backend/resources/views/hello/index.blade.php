@@ -12,10 +12,11 @@
         ここが本文のコンテンツです。
     </p>
     <p>
-        必要なだけ記述できます。
+        Controller value <br /> 'message' = {{$message}}
     </p>
-    @include('components.message', ['msg_title'=>'OK', 'msg_content'=>'サブビューです。'])
-    @each('components.item', $data, 'item')
+    <p>
+        ViewComposer value <br /> 'view_message' = {{$view_message}}
+    </p>
 @endsection
 
 @section('footer')
