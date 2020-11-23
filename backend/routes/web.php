@@ -20,3 +20,5 @@ Route::get('/', function () {
 use App\Http\Controllers\HelloController;
 // Route::get('hello', [HelloController::class, 'Index']); //記法::https://qiita.com/norichintnk/items/34a04cd17bfe4014313a
 Route::get('hello', [HelloController::class, 'index']);
+
+Route::post('hello', [HelloController::class, 'post']);

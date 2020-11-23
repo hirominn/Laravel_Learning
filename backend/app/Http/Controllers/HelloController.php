@@ -7,11 +7,18 @@ use Illuminate\Http\Response;
 
 class HelloController extends Controller
 {
-    public function index(Request $request){
+    public function index(){
         $data = [
-            'msg'=>'これはコントローラから渡されたメッセージです。',
-            'id'=>$request->id
+            'msg'=>'これはBladeを用いたサンプルです。',
         ];
-        return view('hello.index', $data); //viewは、コンテンツにテンプレート(hello/index.php)のレンダリング結果を設定したResponseインスタンスを返す
+        return view('hello.index', $data); //viewは、コンテンツにテンプレート(hello/index.blade.php)のレンダリング結果を設定したResponseインスタンスを返す
+    }
+
+    public function post(Request $request){
+        $msg = $request->msg;
+        $data = [
+            'msg'=>'こんにちは、' . $msg . 'さん！',
+        ];
+        return view('hello.index', $data);
     }
 }
