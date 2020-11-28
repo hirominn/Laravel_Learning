@@ -18,7 +18,9 @@ Route::get('/', function () {
 });
 
 use App\Http\Controllers\HelloController;
+// use App\Http\Middleware\HelloMiddleware;
 // Route::get('hello', [HelloController::class, 'Index']); //記法::https://qiita.com/norichintnk/items/34a04cd17bfe4014313a
-Route::get('hello', [HelloController::class, 'index']);
+Route::get('hello', [HelloController::class, 'index'])
+    ->middleware('helo');
 
 Route::post('hello', [HelloController::class, 'post']);
