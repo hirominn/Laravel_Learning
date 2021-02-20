@@ -6,17 +6,18 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Requests\HelloRequest;
 use Validator;
+use Illuminate\Support\Facades\DB;
 
 class HelloController extends Controller
 {
     public function index(Request $request){
-        if($request->hasCookie('msg'))
-        {
-            $msg = 'Cookie: ' . $request->cookie('msg');
+        if(isset($request->id)){
+            $param = ['id' => $request->id];
+            $items = DB::select('select * from Users where id = :id', $param);
         } else {
-            $msg = '※クッキーはありません。';
+            $items = DB::select('select * from Users');
         }
-        return view('hello.index', ['msg'=>$msg, ]); //viewは、コンテンツにテンプレート(hello/index.blade.php)のレンダリング結果を設定したResponseインスタンスを返す
+        return view('hello.index', ['items'=>$items]);
     }
 
     public function post(Request $request){
@@ -28,5 +29,52 @@ class HelloController extends Controller
         $response = new Response(view('hello.index', ['msg'=>'「' . $msg . '」をクッキーに保存しました。']));
         $response->cookie('msg', $msg, 100);
         return $response;
+    }
+
+    public function add(Request $request)
+    {
+        return view('hello.add');
+    }
+
+    public function create(Request $request)
+    {
+        $param = [
+            'userid' => $request->userid,
+            'teamid' => $request->teamid,
+        ];
+        DB::insert('insert into Users (userid, teamid) values (:userid, :teamid)', $param);
+        return redirect('/hello');
+    }
+
+    public function edit(Request $request)
+    {
+        $param = ['id' => $request->id];
+        $item = DB::select('select * from Users where id = :id', $param);
+        return view('hello.edit', ['form' => $item[0]]);
+    }
+
+    public function update(Request $request)
+    {
+        $param = [
+            'id' => $request->id,
+            'userid' => $request->userid,
+            'teamid' => $request->teamid,
+        ];
+        DB::update('update Users set userid = :userid, teamid = :teamid where id = :id', $param);
+        return redirect('/hello');
+    }
+
+    public function del(Request $request)
+    {
+        $param = ['id' => $request->id];
+        $item = DB::select('select * from Users where id = :id', $param);
+        return view('hello.del', ['form' => $item[0]]);
+    }
+
+    public function remove(Request $request)
+    {
+        $param = ['id' => $request->id];
+        DB::delete('delete from Users where id = :id', $param);
+        return redirect('/hello');
     }
 }
