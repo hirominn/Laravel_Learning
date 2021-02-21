@@ -14,9 +14,6 @@
                 id
             </th>
             <th>
-                userid
-            </th>
-            <th>
                 teamid
             </th>
         </tr>
@@ -26,10 +23,10 @@
                     {{$item->id}}
                 </td>
                 <td>
-                    {{$item->userid}}
+                    {{$item->teamid}}
                 </td>
                 <td>
-                    {{$item->teamid}}
+                    {{$item->ismyself}}
                 </td>
             </tr>
         @endforeach

@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\DB;
 class HelloController extends Controller
 {
     public function index(Request $request){
-        $items = DB::table('Users')
-            ->orderBy('userid', 'asc')
+        $items = DB::table('teams')
+            ->orderBy('id', 'asc')
             ->get();
         // if(isset($request->id)){
         //     $param = ['id' => $request->id];
