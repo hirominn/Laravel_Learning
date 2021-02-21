@@ -11,12 +11,15 @@ use Illuminate\Support\Facades\DB;
 class HelloController extends Controller
 {
     public function index(Request $request){
-        if(isset($request->id)){
-            $param = ['id' => $request->id];
-            $items = DB::select('select * from Users where id = :id', $param);
-        } else {
-            $items = DB::select('select * from Users');
-        }
+        $items = DB::table('Users')
+            ->orderBy('userid', 'asc')
+            ->get();
+        // if(isset($request->id)){
+        //     $param = ['id' => $request->id];
+        //     $items = DB::select('select * from Users where id = :id', $param);
+        // } else {
+        //     $items = DB::select('select * from Users');
+        // }
         return view('hello.index', ['items'=>$items]);
     }
 
@@ -42,15 +45,18 @@ class HelloController extends Controller
             'userid' => $request->userid,
             'teamid' => $request->teamid,
         ];
-        DB::insert('insert into Users (userid, teamid) values (:userid, :teamid)', $param);
+        DB::table('Users')->insert($param);
         return redirect('/hello');
     }
 
     public function edit(Request $request)
     {
-        $param = ['id' => $request->id];
-        $item = DB::select('select * from Users where id = :id', $param);
-        return view('hello.edit', ['form' => $item[0]]);
+        $item = DB::table('Users')
+            ->where('id', $request->id)
+            ->first();
+        // $param = ['id' => $request->id];
+        // $item = DB::select('select * from Users where id = :id', $param);
+        return view('hello.edit', ['form' => $item]);
     }
 
     public function update(Request $request)
@@ -60,21 +66,45 @@ class HelloController extends Controller
             'userid' => $request->userid,
             'teamid' => $request->teamid,
         ];
-        DB::update('update Users set userid = :userid, teamid = :teamid where id = :id', $param);
+        DB::table('Users')
+            ->where('id', $request->id)
+            ->update($param);
         return redirect('/hello');
     }
 
     public function del(Request $request)
     {
-        $param = ['id' => $request->id];
-        $item = DB::select('select * from Users where id = :id', $param);
-        return view('hello.del', ['form' => $item[0]]);
+        $item = DB::table('Users')
+            ->where('id', $request->id)
+            ->first();
+        return view('hello.del', ['form' => $item]);
     }
 
     public function remove(Request $request)
     {
-        $param = ['id' => $request->id];
-        DB::delete('delete from Users where id = :id', $param);
+        DB::table('Users')
+            ->where('id', $request->id)
+            ->delete();
         return redirect('/hello');
+    }
+
+    public function show(Request $request)
+    {
+        $page = $request->page;
+        $items = DB::table('Users')
+            ->offset($page * 3)
+            ->limit(3)
+            ->get();
+        // $min = $request->min;
+        // $max = $request->max;
+        // $items = DB::table('Users')
+        //     ->whereRaw('userid >= ? and userid <= ?', [$min, $max])->get();
+
+        // $teamid = $request->teamid;
+        // $items = DB::table('Users')
+        //     ->where('teamid', 'like', '%' . $teamid . '%')
+        //     ->orWhere('teamid', 'like', '%' . $teamid . '%')
+        //     ->get();
+        return view('hello.show', ['items' => $items]);
     }
 }
