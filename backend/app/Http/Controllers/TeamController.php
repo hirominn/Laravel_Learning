@@ -28,4 +28,47 @@ class TeamController extends Controller
         $param = ['input' => $request->input, 'item' => $item];
         return view('team.find', $param);
     }
+
+    public function add(Request $request)
+    {
+        return view('team.add');
+    }
+
+    public function create(Request $request)
+    {
+        $this->validate($request, Team::$rules);
+        $team = new Team;
+        $form = $request->all();
+        unset($form['_token']);
+        $team->fill($form)->save();
+        return redirect('/team');
+    }
+
+    public function edit(Request $request)
+    {
+        $team = Team::find($request->id);
+        return view('team.edit', ['form' => $team]);
+    }
+
+    public function update(Request $request)
+    {
+        $this->validate($request, Team::$rules);
+        $team = Team::find($request->id);
+        $form = $request->all();
+        unset($form['_token']);
+        $team->fill($form)->save();
+        return redirect('/team');
+    }
+
+    public function delete(Request $request)
+    {
+        $team = Team::find($request->id);
+        return view('team.del', ['form' => $team]);
+    }
+
+    public function remove(Request $request)
+    {
+        Team::find($request->id)->delete();
+        return redirect('/team');
+    }
 }

@@ -41,3 +41,12 @@ Route::get('team', [TeamController::class, 'index']);
 
 Route::get('team/find', [TeamController::class, 'find']);
 Route::post('team/find', [TeamController::class, 'search']);
+
+Route::get('team/add', [TeamController::class, 'add']);
+Route::post('team/add', [TeamController::class, 'create']);
+
+Route::get('team/edit', [TeamController::class, 'edit']);
+Route::post('team/edit', [TeamController::class, 'update']);
+
+Route::get('team/del', [TeamController::class, 'delete']);
+Route::post('team/del', [TeamController::class, 'remove']);

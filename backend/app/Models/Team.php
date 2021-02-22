@@ -37,4 +37,13 @@ class Team extends Model
         //     $builder->where('id', '>', 2);
         // });
     }
+
+    protected $guarded = array('id');
+
+    public static $rules = array(
+        'teamid' => 'required',
+        'teamname' => 'required',
+        'ismyself' => 'required',
+        'color' => 'required'
+    );
 }
