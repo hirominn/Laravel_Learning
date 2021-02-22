@@ -34,3 +34,10 @@ Route::get('hello/del', [HelloController::class, 'del']);
 Route::post('hello/del', [HelloController::class, 'remove']);
 
 Route::get('hello/show', [HelloController::class, 'show']);
+
+use App\Http\Controllers\TeamController;
+
+Route::get('team', [TeamController::class, 'index']);
+
+Route::get('team/find', [TeamController::class, 'find']);
+Route::post('team/find', [TeamController::class, 'search']);
