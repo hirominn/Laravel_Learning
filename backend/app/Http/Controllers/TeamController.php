@@ -20,7 +20,11 @@ class TeamController extends Controller
 
     public function search(Request $request)
     {
-        $item = Team::find($request->input);
+        $min = $request->input * 1;
+        $max = $min + 10;
+        $item = Team::IdGreaterThan($min)
+            ->idLessThan($max)
+            ->first();
         $param = ['input' => $request->input, 'item' => $item];
         return view('team.find', $param);
     }
