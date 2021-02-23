@@ -9,8 +9,10 @@ class TeamController extends Controller
 {
     public function index(Request $request)
     {
-        $items = Team::all();
-        return view('team.index', ['items' => $items]);
+        $hasItems = Team::has('events')->get();
+        $noItems = Team::doesntHave('events')->get();
+        $param = ['hasItems' => $hasItems, 'noItems' => $noItems];
+        return view('team.index', $param);
     }
 
     public function find(Request $request)

@@ -11,41 +11,42 @@
     <table>
         <tr>
             <th>
-                id
+                Team
             </th>
             <th>
-                teamid
-            </th>
-            <th>
-                teamname
-            </th>
-            <th>
-                ismyself
-            </th>
-            <th>
-                color
-            </th>
-            <th>
-                data
+                Event
             </th>
         </tr>
-        @foreach($items as $item)
+        @foreach($hasItems as $item)
             <tr>
                 <td>
-                    {{$item->id}}
+                    {{$item->getData()}}
                 </td>
                 <td>
-                    {{$item->teamid}}
+                    <table width="100%">
+                        @foreach($item->events as $obj)
+                            <tr>
+                                <td>
+                                    {{$obj->getData()}}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
                 </td>
-                <td>
-                    {{$item->teamname}}
-                </td>
-                <td>
-                    {{$item->ismyself}}
-                </td>
-                <td>
-                    {{$item->color}}
-                </td>
+            </tr>
+        @endforeach
+    </table>
+    <div style="margin:10px;">
+
+    </div>
+    <table>
+        <tr>
+            <th>
+                Team
+            </th>
+        </tr>
+        @foreach($noItems as $item)
+            <tr>
                 <td>
                     {{$item->getData()}}
                 </td>

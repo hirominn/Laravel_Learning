@@ -50,3 +50,10 @@ Route::post('team/edit', [TeamController::class, 'update']);
 
 Route::get('team/del', [TeamController::class, 'delete']);
 Route::post('team/del', [TeamController::class, 'remove']);
+
+use App\Http\Controllers\EventController;
+
+Route::get('event', [EventController::class, 'index']);
+
+Route::get('event/add', [EventController::class, 'add']);
+Route::post('event/add', [EventController::class, 'create']);

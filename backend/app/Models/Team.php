@@ -29,14 +29,14 @@ class Team extends Model
         return $query->where('id', '<=', $n);
     }
 
-    protected static function boot()
-    {
-        parent::boot();
-        static::addGlobalScope(new ScopeTeam);
-        // static::addGlobalScope('ScopeId', function (Builder $builder) {
-        //     $builder->where('id', '>', 2);
-        // });
-    }
+    // protected static function boot()
+    // {
+    //     parent::boot();
+    //     static::addGlobalScope(new ScopeTeam);
+    //     // static::addGlobalScope('ScopeId', function (Builder $builder) {
+    //     //     $builder->where('id', '>', 2);
+    //     // });
+    // }
 
     protected $guarded = array('id');
 
@@ -46,4 +46,9 @@ class Team extends Model
         'ismyself' => 'required',
         'color' => 'required'
     );
+
+    public function events()
+    {
+        return $this->hasMany('App\Models\Event');
+    }
 }
