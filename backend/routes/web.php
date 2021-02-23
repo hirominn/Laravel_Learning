@@ -57,3 +57,8 @@ Route::get('event', [EventController::class, 'index']);
 
 Route::get('event/add', [EventController::class, 'add']);
 Route::post('event/add', [EventController::class, 'create']);
+
+use App\Http\Controllers\RestappController;
+Route::resource('rest', RestappController::class);
+
+Route::get('hello/rest', [HelloController::class, 'rest']);
