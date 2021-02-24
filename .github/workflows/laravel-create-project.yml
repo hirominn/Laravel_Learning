@@ -30,8 +30,13 @@ jobs:
       - name: Laravel Version
         run: docker-compose exec -T app php artisan --version
 
+      - name: Laravel Settings
+        run: |
+          docker-compose exec -T app cp .env.example .env
+          docker-compose exec -T app php artisan key:generate
+
       - name: Laravel Migrate Testing
-        run: docker-compose exec -T app php artisan migrate
+        run: docker-compose exec -T app php artisan migrate --force
 
       - name: Laravel Rollback Testing
         run: docker-compose exec -T app php artisan migrate:refresh --seed
