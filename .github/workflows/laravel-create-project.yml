@@ -33,7 +33,7 @@ jobs:
         run: docker-compose exec -T app php artisan --version
 
       - name: Laravel Migrate Testing
-        run: docker-compose exec -T app php artisan migrate
+        run: docker-compose exec -T app php artisan migrate --force
 
       - name: Laravel Rollback Testing
         run: docker-compose exec -T app php artisan migrate:refresh --seed
