@@ -20,7 +20,8 @@ Route::get('/', function () {
 use App\Http\Controllers\HelloController;
 // use App\Http\Middleware\HelloMiddleware;
 // Route::get('hello', [HelloController::class, 'Index']); //記法::https://qiita.com/norichintnk/items/34a04cd17bfe4014313a
-Route::get('hello', [HelloController::class, 'index']);
+Route::get('hello', [HelloController::class, 'index'])
+    ->middleware('auth');
 
 Route::post('hello', [HelloController::class, 'post']);
 
@@ -65,3 +66,10 @@ Route::get('hello/rest', [HelloController::class, 'rest']);
 
 Route::get('hello/session', [HelloController::class, 'ses_get']);
 Route::post('hello/session', [HelloController::class, 'ses_put']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/hello/auth', [HelloController::class, 'getAuth']);
+Route::post('/hello/auth', [HelloController::class, 'postAuth']);
